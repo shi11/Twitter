@@ -19,11 +19,13 @@ package com.soenkerohde.twitter {
 	
 	public class Twitter extends EventDispatcher implements ITwitter {
 		
-		public static const VERIFY_CREDENTIALS:String = "https://twitter.com/account/verify_credentials.json";
-		public static const REQUEST_TOKEN:String = "http://twitter.com/oauth/request_token";
-		public static const ACCESS_TOKEN:String = "http://twitter.com/oauth/access_token";
-		public static const AUTHORIZE:String = "http://twitter.com/oauth/authorize";
-		public static const SET_STATUS:String = "https://twitter.com/statuses/update.json";
+		public static const VERIFY_CREDENTIALS:String = "https://api.twitter.com/account/verify_credentials.json";
+		public static const REQUEST_TOKEN:String = "https://api.twitter.com/oauth/request_token";
+		public static const ACCESS_TOKEN:String = "https://api.twitter.com/oauth/access_token";
+		public static const AUTHORIZE:String = "https://api.twitter.com/oauth/authorize";
+		public static const SET_STATUS:String = "https://api.twitter.com/statuses/update.json";
+		
+		public static const TWITTER_CALLBACK_URL:String = "http://www.yourCallbackURL.com";
 		
 		public static function getTokenFromResponse( tokenResponse : String ) : OAuthToken {
 			var result:OAuthToken = new OAuthToken();
@@ -92,7 +94,7 @@ package com.soenkerohde.twitter {
 			}
 		}
 		
-		public function obtainAccessToken( pin : uint ) : void {
+		public function obtainAccessToken( pin : String = "" ) : void {
 			var oauthRequest:OAuthRequest = new OAuthRequest( "GET", ACCESS_TOKEN, { oauth_verifier: pin }, consumer, requestToken );
 			var request:URLRequest = new URLRequest( oauthRequest.buildRequest( signature, OAuthRequest.RESULT_TYPE_URL_STRING ) );
 			request.method = "GET";
@@ -148,6 +150,6 @@ package com.soenkerohde.twitter {
 		protected function statusResultHandler( event : Event ) : void {
 			dispatchEvent( new TwitterStatusEvent( TwitterStatusEvent.STATUS_SEND ) );
 		}
-	
+		
 	}
 }

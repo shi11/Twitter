@@ -18,7 +18,7 @@ package com.soenkerohde.twitter.event {
 		}
 		
 		public function TwitterOAuthEvent( type : String, token : OAuthToken, bubbles : Boolean = false ) {
-			super( type, bubbles );
+			super( type, bubbles, true );
 			_token = token;
 		}
 		
